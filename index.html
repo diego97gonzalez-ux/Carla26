@@ -5,15 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feliz Cumpleaños, Carla ❤️</title>
 
-  <!-- Fuentes elegantes de Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
-
-  <!-- AOS (Animaciones de scroll) -->
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
-  <!-- Confetti JS para la sorpresa -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
   <style>
@@ -24,11 +19,7 @@
       --card-bg: #ffffff;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       background-color: var(--bg-color);
@@ -38,10 +29,7 @@
       overflow-x: hidden;
     }
 
-    h1, h2, h3 {
-      font-family: 'Playfair Display', serif;
-      color: var(--accent);
-    }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--accent); }
 
     .hero {
       height: 100vh;
@@ -53,23 +41,12 @@
       padding: 20px;
     }
 
-    .hero h1 {
-      font-size: 2.8rem;
-      margin-bottom: 12px;
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-      max-width: 500px;
-    }
+    .hero h1 { font-size: 2.8rem; margin-bottom: 12px; }
+    .hero p { font-size: 1.1rem; max-width: 500px; }
 
     .scroll-hint {
-      margin-top: 40px;
-      font-size: 0.9rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      opacity: 0.6;
-      animation: bounce 2s infinite;
+      margin-top: 40px; font-size: 0.9rem; letter-spacing: 2px;
+      text-transform: uppercase; opacity: 0.6; animation: bounce 2s infinite;
     }
 
     @keyframes bounce {
@@ -78,11 +55,7 @@
       60% { transform: translateY(-4px); }
     }
 
-    .container {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
+    .container { max-width: 680px; margin: 0 auto; padding: 40px 20px; }
 
     .memory-card {
       background: var(--card-bg);
@@ -92,21 +65,37 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.06);
     }
 
-    .memory-card img {
+    /* Sistema de galería deslizable (Carrusel) */
+    .gallery-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 15px;
+      padding: 15px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent) transparent;
+    }
+    
+    .gallery-container::-webkit-scrollbar { height: 6px; }
+    .gallery-container::-webkit-scrollbar-thumb { background-color: var(--accent); border-radius: 10px; }
+
+    .gallery-item {
+      flex: 0 0 85%;
+      scroll-snap-align: center;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .gallery-item img, .single-image {
       width: 100%;
-      height: auto;
-      display: block;
+      height: 380px;
       object-fit: cover;
+      display: block;
     }
 
-    .memory-content {
-      padding: 25px;
-    }
-
-    .memory-content h2 {
-      font-size: 1.6rem;
-      margin-bottom: 10px;
-    }
+    .memory-content { padding: 5px 25px 25px 25px; }
+    .memory-content h2 { font-size: 1.6rem; margin-bottom: 10px; }
 
     .reveal-card {
       background: #fdfbf7;
@@ -118,45 +107,26 @@
     }
 
     .btn-surprise {
-      background-color: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 14px 28px;
-      font-size: 1rem;
-      border-radius: 30px;
-      cursor: pointer;
-      font-weight: 600;
-      margin-top: 20px;
+      background-color: var(--accent); color: #fff; border: none;
+      padding: 14px 28px; font-size: 1rem; border-radius: 30px;
+      cursor: pointer; font-weight: 600; margin-top: 20px;
       transition: transform 0.2s ease, opacity 0.2s ease;
     }
 
-    .btn-surprise:hover {
-      transform: scale(1.05);
-      opacity: 0.9;
-    }
+    .btn-surprise:hover { transform: scale(1.05); opacity: 0.9; }
 
-    .hidden-msg {
-      display: none;
-      margin-top: 25px;
-      animation: fadeIn 1s forwards;
-    }
+    .hidden-msg { display: none; margin-top: 25px; animation: fadeIn 1s forwards; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      font-size: 0.9rem;
-      opacity: 0.7;
-    }
+    footer { text-align: center; padding: 40px 20px; font-size: 0.9rem; opacity: 0.7; }
   </style>
 </head>
 <body>
 
-  <!-- Cabecera -->
   <section class="hero">
     <div data-aos="fade-down" data-aos-duration="1200">
       <h1>¡Feliz Cumpleaños!</h1>
@@ -169,28 +139,78 @@
 
     <!-- Recuerdo 1: Los viajes juntos -->
     <div class="memory-card" data-aos="fade-up" data-aos-duration="1000">
-      <img src="IMG20220824194124.jpg" alt="Nuestros viajes">
+      <div class="gallery-container">
+        <!-- Francia -->
+        <div class="gallery-item"><img src="IMG20221206101513.jpg" alt="Burdeos"></div>
+        <div class="gallery-item"><img src="IMG20221206151548.jpg" alt="Toulouse"></div>
+        <div class="gallery-item"><img src="IMG20221208153525.jpg" alt="Francia"></div>
+        <!-- Argentina -->
+        <div class="gallery-item"><img src="IMG20230404150311.jpg" alt="Argentina"></div>
+        <div class="gallery-item"><img src="IMG20230405110937.jpg" alt="Argentina"></div>
+        <div class="gallery-item"><img src="IMG20230410111907.jpg" alt="Argentina"></div>
+        <div class="gallery-item"><img src="IMG20230410121253.jpg" alt="Argentina"></div>
+        <div class="gallery-item"><img src="IMG20230410140643.jpg" alt="Argentina"></div>
+        <!-- Lisboa -->
+        <div class="gallery-item"><img src="IMG20240818135441_01.jpg" alt="Lisboa"></div>
+        <div class="gallery-item"><img src="IMG20240819134252.jpg" alt="Lisboa"></div>
+        <div class="gallery-item"><img src="IMG20240819141934.jpg" alt="Lisboa"></div>
+        <div class="gallery-item"><img src="IMG20240821142205.jpg" alt="Lisboa"></div>
+        <!-- Paris -->
+        <div class="gallery-item"><img src="IMG20250206163844.jpg" alt="Paris"></div>
+        <div class="gallery-item"><img src="IMG20250206170541.jpg" alt="Paris"></div>
+        <div class="gallery-item"><img src="IMG20250207095012.jpg" alt="Paris"></div>
+        <div class="gallery-item"><img src="IMG20250207121512.jpg" alt="Paris"></div>
+        <div class="gallery-item"><img src="IMG20250207203858.jpg" alt="Paris"></div>
+        <div class="gallery-item"><img src="IMG20250208155245.jpg" alt="Paris"></div>
+        <!-- Mexico -->
+        <div class="gallery-item"><img src="IMG20250624094035.jpg" alt="Mexico"></div>
+        <div class="gallery-item"><img src="IMG20250626143426.jpg" alt="Mexico"></div>
+        <div class="gallery-item"><img src="IMG20250630093951.jpg" alt="Mexico"></div>
+        <div class="gallery-item"><img src="IMG20250701102515.jpg" alt="Mexico"></div>
+        <div class="gallery-item"><img src="IMG20250701115832.jpg" alt="Mexico"></div>
+        <div class="gallery-item"><img src="IMG20250702140935.jpg" alt="Mexico"></div>
+        <!-- Mondariz -->
+        <div class="gallery-item"><img src="IMG20251213130024.jpg" alt="Mondariz"></div>
+      </div>
       <div class="memory-content">
         <h2>El mundo a nuestro lado</h2>
-        <p>Hemos recorrido un montón de sitios juntos, desde escapadas inolvidables hasta lugares exóticos como Tailandia. Cada viaje contigo ha sido una aventura increíble.</p>
+        <p>Hemos recorrido un montón de sitios juntos. Desde nuestras escapadas a Burdeos, Toulouse, Lisboa y París, hasta cruzar el charco para descubrir Argentina y México... ¡por no hablar de nuestra exigente expedición a Mondariz! 😜 Cada kilómetro contigo es una aventura increíble.</p>
       </div>
     </div>
 
-    <!-- Recuerdo 2: El guiño a ella -->
+    <!-- Recuerdo 2: Viajera empedernida -->
     <div class="memory-card" data-aos="fade-up" data-aos-duration="1000">
-      <img src="IMG_7464.jpg" alt="Carla viajera">
+      <div class="gallery-container">
+        <div class="gallery-item"><img src="21.46.08.jpeg" alt="Indonesia con amigas"></div>
+        <div class="gallery-item"><img src="21.44.44.jpeg" alt="Tailandia con amigas"></div>
+      </div>
       <div class="memory-content">
-        <h2>Aunque, siendo sinceros...</h2>
-        <p>Tengo que admitir que tú tienes bastantes más sellos en el pasaporte que yo. ¡Es imposible seguirte el ritmo descubriendo el mundo!</p>
+        <h2>Tú, la verdadera trotamundos</h2>
+        <p>Aunque siendo sinceros, tú me ganas por goleada. Entre tus planazos por Indonesia y tu reciente viaje a Tailandia con tus amigas, ¡es imposible seguirte el ritmo sumando sellos en el pasaporte!</p>
       </div>
     </div>
     
-    <!-- Recuerdo 3: La transición a Galicia -->
+    <!-- Recuerdo 3: Galicia -->
     <div class="memory-card" data-aos="fade-up" data-aos-duration="1000">
-      <img src="IMG_7890.jpg" alt="Norte de Galicia">
+      <div class="gallery-container">
+        <div class="gallery-item"><img src="IMG20220824194124.jpg" alt="Galicia"></div>
+        <div class="gallery-item"><img src="IMG_7464.jpg" alt="Galicia"></div>
+        <div class="gallery-item"><img src="IMG_7890.jpg" alt="Galicia"></div>
+        <div class="gallery-item"><img src="IMG_8212.jpg" alt="Galicia"></div>
+        <div class="gallery-item"><img src="IMG20220822165706.jpg" alt="Galicia"></div>
+      </div>
       <div class="memory-content">
         <h2>Vuelta a los orígenes</h2>
-        <p>Pero de entre todos los destinos, hay uno especial. Aquella vez que nos perdimos por la zona norte de Galicia y nos prometimos que algún día volveríamos con más calma.</p>
+        <p>Pero de entre todos los destinos, hay uno que siempre será nuestro refugio. Aquel primer viaje de novios donde nos perdimos por la zona norte de Galicia y nos prometimos que, algún día, volveríamos con más calma.</p>
+      </div>
+    </div>
+
+    <!-- Recuerdo 4: El árbol (Imagen única) -->
+    <div class="memory-card" data-aos="fade-up" data-aos-duration="1000">
+      <img src="IMG20220825142840.jpg" alt="Nuestras iniciales" class="single-image">
+      <div class="memory-content">
+        <h2>Una misión pendiente</h2>
+        <p>Además... dejamos una pequeña marca en nuestro camino. ¿Seguirán nuestras iniciales grabadas en aquel árbol? Creo que va siendo hora de ir a comprobarlo en persona.</p>
       </div>
     </div>
 
@@ -201,9 +221,9 @@
       <button class="btn-surprise" onclick="mostrarSorpresa()">Descubrir regalo 🎁</button>
 
       <div class="hidden-msg" id="mensajeSecreto">
-        <h3 style="margin-bottom: 12px; font-size: 1.5rem;">¡Nos vamos a recrear nuestro primer viaje de novios!</h3>
-        <p>Prepara las maletas porque volvemos a recorrer el norte juntos. Un pequeño viaje para celebrar nosotros, antes de que llegue la gran aventura...</p>
-        <p style="margin-top: 14px; font-style: italic; font-weight: bold; color: var(--accent);">¡Porque el 10 de septiembre de 2027 nos espera el mejor de todos! ❤️</p>
+        <h3 style="margin-bottom: 12px; font-size: 1.5rem;">¡Nos vamos a recrear nuestro viaje de novios!</h3>
+        <p>Prepara la maleta porque volvemos a recorrer el norte de Galicia juntos. Una escapada para celebrar nosotros, antes de que llegue la gran aventura...</p>
+        <p style="margin-top: 14px; font-style: italic; font-weight: bold; color: var(--accent);">¡Porque el año que viene nos espera el mejor de todos! ❤️</p>
       </div>
     </div>
 
@@ -213,24 +233,12 @@
     <p>Con todo mi amor para ti ✨</p>
   </footer>
 
-  <!-- Script AOS -->
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
-    AOS.init({
-      once: true,
-      offset: 120
-    });
-
+    AOS.init({ once: true, offset: 120 });
     function mostrarSorpresa() {
-      const msg = document.getElementById('mensajeSecreto');
-      msg.style.display = 'block';
-      
-      // Lanzar confeti
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
+      document.getElementById('mensajeSecreto').style.display = 'block';
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
     }
   </script>
 </body>
