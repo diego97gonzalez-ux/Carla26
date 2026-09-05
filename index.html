@@ -65,36 +65,40 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.06);
     }
 
-    /* Sistema de galería deslizable (Carrusel) */
-    .gallery-container {
-      display: flex;
-      overflow-x: auto;
-      gap: 15px;
-      padding: 15px;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: thin;
-      scrollbar-color: var(--accent) transparent;
-    }
-    
-    .gallery-container::-webkit-scrollbar { height: 6px; }
-    .gallery-container::-webkit-scrollbar-thumb { background-color: var(--accent); border-radius: 10px; }
-
-    .gallery-item {
-      flex: 0 0 85%;
-      scroll-snap-align: center;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    .gallery-item img, .single-image {
+    /* NUEVO: Sistema dinámico de fotos (Slideshow con efecto cine) */
+    .slideshow-container {
+      position: relative;
       width: 100%;
-      height: 380px;
+      height: 420px; /* Un poco más alto para que luzcan las fotos */
+      overflow: hidden;
+      background-color: #eee;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.1); /* Empieza con un poco de zoom */
+      transition: opacity 1.5s ease-in-out, transform 4s ease-out;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1); /* Vuelve al tamaño normal suavemente */
+    }
+
+    .single-image {
+      width: 100%;
+      height: 420px;
       object-fit: cover;
       display: block;
     }
 
-    .memory-content { padding: 5px 25px 25px 25px; }
+    .memory-content { padding: 25px; }
     .memory-content h2 { font-size: 1.6rem; margin-bottom: 10px; }
 
     .reveal-card {
@@ -125,7 +129,6 @@
       box-shadow: 0 0 8px rgba(139, 90, 90, 0.4);
     }
 
-    /* Ocultar las flechas nativas de los inputs numéricos */
     input[type=number]::-webkit-inner-spin-button, 
     input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
     input[type=number] { -moz-appearance: textfield; }
@@ -139,7 +142,6 @@
 
     .btn-surprise:hover { transform: scale(1.05); opacity: 0.9; }
 
-    /* Animación de error (temblor) */
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
       25% { transform: translateX(-6px); }
@@ -170,34 +172,35 @@
 
   <div class="container">
 
-    <!-- Recuerdo 1: Los viajes juntos -->
+    <!-- Recuerdo 1: Los viajes juntos (Slideshow Automático) -->
     <div class="memory-card" data-aos="fade-up" data-aos-duration="1000">
-      <div class="gallery-container">
-        <div class="gallery-item"><img src="IMG20221206101513.jpg" alt="Burdeos"></div>
-        <div class="gallery-item"><img src="IMG20221206151548.jpg" alt="Toulouse"></div>
-        <div class="gallery-item"><img src="IMG20221208153525.jpg" alt="Francia"></div>
-        <div class="gallery-item"><img src="IMG20230404150311.jpg" alt="Argentina"></div>
-        <div class="gallery-item"><img src="IMG20230405110937.jpg" alt="Argentina"></div>
-        <div class="gallery-item"><img src="IMG20230410111907.jpg" alt="Argentina"></div>
-        <div class="gallery-item"><img src="IMG20230410121253.jpg" alt="Argentina"></div>
-        <div class="gallery-item"><img src="IMG20230410140643.jpg" alt="Argentina"></div>
-        <div class="gallery-item"><img src="IMG20240818135441_01.jpg" alt="Lisboa"></div>
-        <div class="gallery-item"><img src="IMG20240819134252.jpg" alt="Lisboa"></div>
-        <div class="gallery-item"><img src="IMG20240819141934.jpg" alt="Lisboa"></div>
-        <div class="gallery-item"><img src="IMG20240821142205.jpg" alt="Lisboa"></div>
-        <div class="gallery-item"><img src="IMG20250206163844.jpg" alt="Paris"></div>
-        <div class="gallery-item"><img src="IMG20250206170541.jpg" alt="Paris"></div>
-        <div class="gallery-item"><img src="IMG20250207095012.jpg" alt="Paris"></div>
-        <div class="gallery-item"><img src="IMG20250207121512.jpg" alt="Paris"></div>
-        <div class="gallery-item"><img src="IMG20250207203858.jpg" alt="Paris"></div>
-        <div class="gallery-item"><img src="IMG20250208155245.jpg" alt="Paris"></div>
-        <div class="gallery-item"><img src="IMG20250624094035.jpg" alt="Mexico"></div>
-        <div class="gallery-item"><img src="IMG20250626143426.jpg" alt="Mexico"></div>
-        <div class="gallery-item"><img src="IMG20250630093951.jpg" alt="Mexico"></div>
-        <div class="gallery-item"><img src="IMG20250701102515.jpg" alt="Mexico"></div>
-        <div class="gallery-item"><img src="IMG20250701115832.jpg" alt="Mexico"></div>
-        <div class="gallery-item"><img src="IMG20250702140935.jpg" alt="Mexico"></div>
-        <div class="gallery-item"><img src="IMG20251213130024.jpg" alt="Mondariz"></div>
+      <div class="slideshow-container">
+        <!-- El primer slide lleva la clase "active" para que se vea al cargar -->
+        <img src="IMG20221206101513.jpg" alt="Viaje" class="slide active">
+        <img src="IMG20221206151548.jpg" alt="Viaje" class="slide">
+        <img src="IMG20221208153525.jpg" alt="Viaje" class="slide">
+        <img src="IMG20230404150311.jpg" alt="Viaje" class="slide">
+        <img src="IMG20230405110937.jpg" alt="Viaje" class="slide">
+        <img src="IMG20230410111907.jpg" alt="Viaje" class="slide">
+        <img src="IMG20230410121253.jpg" alt="Viaje" class="slide">
+        <img src="IMG20230410140643.jpg" alt="Viaje" class="slide">
+        <img src="IMG20240818135441_01.jpg" alt="Viaje" class="slide">
+        <img src="IMG20240819134252.jpg" alt="Viaje" class="slide">
+        <img src="IMG20240819141934.jpg" alt="Viaje" class="slide">
+        <img src="IMG20240821142205.jpg" alt="Viaje" class="slide">
+        <img src="IMG20250206163844.jpg" alt="Viaje" class="slide">
+        <img src="IMG20250206170541.jpg" alt="Viaje" class="slide">
+        <img src="IMG20250207095012.jpg" alt="Viaje" class="slide">
+        <img src="IMG20250207121512.jpg" alt="Viaje" class="slide">
+        <img src="IMG20250207203858.jpg" alt="Viaje" class="slide">
+        <img src="IMG20250208155245.jpg" alt="Viaje" class="slide">
+        <img src="IMG20250624094035.jpg" alt="Viaje" class="slide">
+        <img src="IMG20250626143426.jpg" alt="Viaje" class="slide">
+        <img src="IMG20250630093951.jpg" alt="Viaje" class="slide">
+        <img src="IMG20250701102515.jpg" alt="Viaje" class="slide">
+        <img src="IMG20250701115832.jpg" alt="Viaje" class="slide">
+        <img src="IMG20250702140935.jpg" alt="Viaje" class="slide">
+        <img src="IMG20251213130024.jpg" alt="Viaje" class="slide">
       </div>
       <div class="memory-content">
         <h2>El mundo a nuestro lado</h2>
@@ -205,26 +208,26 @@
       </div>
     </div>
 
-    <!-- Recuerdo 2: Viajera empedernida -->
+    <!-- Recuerdo 2: Viajera empedernida (Slideshow Automático) -->
     <div class="memory-card" data-aos="fade-up" data-aos-duration="1000">
-      <div class="gallery-container">
-        <div class="gallery-item"><img src="21.46.08.jpeg" alt="Indonesia con amigas"></div>
-        <div class="gallery-item"><img src="21.44.44.jpeg" alt="Tailandia con amigas"></div>
+      <div class="slideshow-container">
+        <img src="21.46.08.jpeg" alt="Indonesia" class="slide active">
+        <img src="21.44.44.jpeg" alt="Tailandia" class="slide">
       </div>
       <div class="memory-content">
-        <h2>Tú, la verdadera trotamundos</h2>
+        <h2>La verdadera trotamundos</h2>
         <p>Aunque siendo sinceros, tú me ganas. Entre tus viajes por Indonesia y Tailandia con tus amigas, ¡es imposible ganarte en sellos en el pasaporte!</p>
       </div>
     </div>
     
-    <!-- Recuerdo 3: Galicia -->
+    <!-- Recuerdo 3: Galicia (Slideshow Automático) -->
     <div class="memory-card" data-aos="fade-up" data-aos-duration="1000">
-      <div class="gallery-container">
-        <div class="gallery-item"><img src="IMG20220824194124.jpg" alt="Galicia"></div>
-        <div class="gallery-item"><img src="IMG_7464.jpg" alt="Galicia"></div>
-        <div class="gallery-item"><img src="IMG_7890.jpg" alt="Galicia"></div>
-        <div class="gallery-item"><img src="IMG_8212.jpg" alt="Galicia"></div>
-        <div class="gallery-item"><img src="IMG20220822165706.jpg" alt="Galicia"></div>
+      <div class="slideshow-container">
+        <img src="IMG20220824194124.jpg" alt="Galicia" class="slide active">
+        <img src="IMG_7464.jpg" alt="Galicia" class="slide">
+        <img src="IMG_7890.jpg" alt="Galicia" class="slide">
+        <img src="IMG_8212.jpg" alt="Galicia" class="slide">
+        <img src="IMG20220822165706.jpg" alt="Galicia" class="slide">
       </div>
       <div class="memory-content">
         <h2>Vuelta a los orígenes</h2>
@@ -232,7 +235,7 @@
       </div>
     </div>
 
-    <!-- Recuerdo 4: El árbol -->
+    <!-- Recuerdo 4: El árbol (Esta se queda estática por ser solo 1 foto) -->
     <div class="memory-card" data-aos="fade-up" data-aos-duration="1000">
       <img src="IMG20220825142840.jpg" alt="Nuestras iniciales" class="single-image">
       <div class="memory-content">
@@ -249,7 +252,7 @@
       <!-- Interfaz del candado -->
       <div id="game-container" style="margin-top: 30px;">
         <p style="margin-bottom: 20px; font-weight: 600; font-size: 1.05rem;">
-          Para abrir tu regalo, tendrás que introducir una fecha muy especial... 💍
+          Para abrir tu regalo, introduce la fecha de la que será nuestra mayor aventura... 💍
         </p>
         
         <div class="game-inputs" style="display: flex; justify-content: center; gap: 8px; margin-bottom: 20px;">
@@ -292,8 +295,27 @@
 
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
+    // Inicializar animaciones de scroll
     AOS.init({ once: true, offset: 120 });
     
+    // Lógica del pase de fotos automático (Slideshow)
+    document.querySelectorAll('.slideshow-container').forEach(container => {
+      let slides = container.querySelectorAll('.slide');
+      let currentSlide = 0;
+      
+      // Si hay más de 1 foto, programamos el cambio automático
+      if(slides.length > 1) {
+        setInterval(() => {
+          // Quitamos clase active a la actual
+          slides[currentSlide].classList.remove('active');
+          // Avanzamos al siguiente índice (y volvemos al principio si llega al final)
+          currentSlide = (currentSlide + 1) % slides.length;
+          // Añadimos clase active a la nueva
+          slides[currentSlide].classList.add('active');
+        }, 3500); // Cambia de foto cada 3.5 segundos
+      }
+    });
+
     // Lógica del juego del candado
     function comprobarFecha() {
       const dia = parseInt(document.getElementById('input-dia').value);
@@ -302,20 +324,13 @@
       const errorMsg = document.getElementById('error-msg');
       const btn = document.getElementById('btn-unlock');
 
-      // Comprueba si la fecha es 10 de septiembre de 2027
       if (dia === 10 && mes === 9 && ano === 2027) {
-        // Oculta el candado y muestra la sorpresa
         document.getElementById('game-container').style.display = 'none';
         document.getElementById('mensajeSecreto').style.display = 'block';
-        
-        // Lluvia de confeti
         confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
       } else {
-        // Muestra error y hace temblar el botón
         errorMsg.style.display = 'block';
         btn.classList.add('shake');
-        
-        // Quita la clase shake tras medio segundo para que pueda volver a temblar si falla de nuevo
         setTimeout(() => {
           btn.classList.remove('shake');
         }, 500);
