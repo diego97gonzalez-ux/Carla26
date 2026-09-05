@@ -106,14 +106,47 @@
       margin: 60px 0;
     }
 
+    /* Estilos para el juego del candado */
+    .game-inputs input[type=number] {
+      width: 65px;
+      padding: 12px 5px;
+      text-align: center;
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      color: var(--text-main);
+      background-color: #fff;
+      outline: none;
+    }
+    
+    .game-inputs input[type=number]:focus {
+      box-shadow: 0 0 8px rgba(139, 90, 90, 0.4);
+    }
+
+    /* Ocultar las flechas nativas de los inputs numéricos */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; }
+
     .btn-surprise {
       background-color: var(--accent); color: #fff; border: none;
       padding: 14px 28px; font-size: 1rem; border-radius: 30px;
-      cursor: pointer; font-weight: 600; margin-top: 20px;
+      cursor: pointer; font-weight: 600; margin-top: 15px;
       transition: transform 0.2s ease, opacity 0.2s ease;
     }
 
     .btn-surprise:hover { transform: scale(1.05); opacity: 0.9; }
+
+    /* Animación de error (temblor) */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-6px); }
+    }
+    .shake { animation: shake 0.4s ease-in-out; }
 
     .hidden-msg { display: none; margin-top: 25px; animation: fadeIn 1s forwards; }
 
@@ -140,36 +173,30 @@
     <!-- Recuerdo 1: Los viajes juntos -->
     <div class="memory-card" data-aos="fade-up" data-aos-duration="1000">
       <div class="gallery-container">
-        <!-- Francia -->
         <div class="gallery-item"><img src="IMG20221206101513.jpg" alt="Burdeos"></div>
         <div class="gallery-item"><img src="IMG20221206151548.jpg" alt="Toulouse"></div>
         <div class="gallery-item"><img src="IMG20221208153525.jpg" alt="Francia"></div>
-        <!-- Argentina -->
         <div class="gallery-item"><img src="IMG20230404150311.jpg" alt="Argentina"></div>
         <div class="gallery-item"><img src="IMG20230405110937.jpg" alt="Argentina"></div>
         <div class="gallery-item"><img src="IMG20230410111907.jpg" alt="Argentina"></div>
         <div class="gallery-item"><img src="IMG20230410121253.jpg" alt="Argentina"></div>
         <div class="gallery-item"><img src="IMG20230410140643.jpg" alt="Argentina"></div>
-        <!-- Lisboa -->
         <div class="gallery-item"><img src="IMG20240818135441_01.jpg" alt="Lisboa"></div>
         <div class="gallery-item"><img src="IMG20240819134252.jpg" alt="Lisboa"></div>
         <div class="gallery-item"><img src="IMG20240819141934.jpg" alt="Lisboa"></div>
         <div class="gallery-item"><img src="IMG20240821142205.jpg" alt="Lisboa"></div>
-        <!-- Paris -->
         <div class="gallery-item"><img src="IMG20250206163844.jpg" alt="Paris"></div>
         <div class="gallery-item"><img src="IMG20250206170541.jpg" alt="Paris"></div>
         <div class="gallery-item"><img src="IMG20250207095012.jpg" alt="Paris"></div>
         <div class="gallery-item"><img src="IMG20250207121512.jpg" alt="Paris"></div>
         <div class="gallery-item"><img src="IMG20250207203858.jpg" alt="Paris"></div>
         <div class="gallery-item"><img src="IMG20250208155245.jpg" alt="Paris"></div>
-        <!-- Mexico -->
         <div class="gallery-item"><img src="IMG20250624094035.jpg" alt="Mexico"></div>
         <div class="gallery-item"><img src="IMG20250626143426.jpg" alt="Mexico"></div>
         <div class="gallery-item"><img src="IMG20250630093951.jpg" alt="Mexico"></div>
         <div class="gallery-item"><img src="IMG20250701102515.jpg" alt="Mexico"></div>
         <div class="gallery-item"><img src="IMG20250701115832.jpg" alt="Mexico"></div>
         <div class="gallery-item"><img src="IMG20250702140935.jpg" alt="Mexico"></div>
-        <!-- Mondariz -->
         <div class="gallery-item"><img src="IMG20251213130024.jpg" alt="Mondariz"></div>
       </div>
       <div class="memory-content">
@@ -205,7 +232,7 @@
       </div>
     </div>
 
-    <!-- Recuerdo 4: El árbol (Imagen única) -->
+    <!-- Recuerdo 4: El árbol -->
     <div class="memory-card" data-aos="fade-up" data-aos-duration="1000">
       <img src="IMG20220825142840.jpg" alt="Nuestras iniciales" class="single-image">
       <div class="memory-content">
@@ -214,24 +241,46 @@
       </div>
     </div>
 
-    <!-- Sección Sorpresa / Regalo -->
+    <!-- Sección Sorpresa con Juego del Candado -->
     <div class="reveal-card" data-aos="zoom-in" data-aos-duration="1000">
       <h2>Ha llegado el momento</h2>
       <p>Es tu cumpleaños y creo que es la excusa perfecta para cumplir esa promesa.</p>
-      <button class="btn-surprise" onclick="mostrarSorpresa()">Descubrir regalo 🎁</button>
 
+      <!-- Interfaz del candado -->
+      <div id="game-container" style="margin-top: 30px;">
+        <p style="margin-bottom: 20px; font-weight: 600; font-size: 1.05rem;">
+          Para abrir tu regalo, introduce la fecha de la que será nuestra mayor aventura... 💍
+        </p>
+        
+        <div class="game-inputs" style="display: flex; justify-content: center; gap: 8px; margin-bottom: 20px;">
+          <input type="number" id="input-dia" placeholder="DD">
+          <span style="font-size: 1.8rem; color: var(--accent); line-height: 45px;">/</span>
+          <input type="number" id="input-mes" placeholder="MM">
+          <span style="font-size: 1.8rem; color: var(--accent); line-height: 45px;">/</span>
+          <input type="number" id="input-ano" placeholder="AAAA" style="width: 85px;">
+        </div>
+        
+        <button class="btn-surprise" id="btn-unlock" onclick="comprobarFecha()">Desbloquear regalo 🔓</button>
+        <p id="error-msg" style="color: #c0392b; display: none; margin-top: 15px; font-size: 0.95rem; font-weight: 600;">
+          Esa no es la fecha correcta... ¡Piénsalo bien! 😉
+        </p>
+      </div>
+
+      <!-- El mensaje se revela si acierta -->
       <div class="hidden-msg" id="mensajeSecreto">
         <h3 style="margin-bottom: 12px; font-size: 1.5rem;">¡Nos vamos a recrear nuestro primer viaje!</h3>
         <p>Prepara la mochila porque nos vamos a pasar un día recorriendo el norte de Galicia juntos. Una escapada exprés para disfrutar, antes de que llegue la gran aventura..</p>
-        <p style="margin-top: 14px; font-style: italic; font-weight: bold; color: var(--accent);">¡Porque el 10 de septiembre de 2027 nos espera el mejor viaje de todos!❤️</p>
-        <div style="text-align: center; margin-top: 20px;">
-  <svg xmlns="http://www.w3.org/2000/svg" width="70" height="45" viewBox="0 0 100 60">
-    <!-- Anillo izquierdo -->
-    <circle cx="35" cy="30" r="22" fill="none" stroke="var(--accent)" stroke-width="5" opacity="0.8"/>
-    <!-- Anillo derecho -->
-    <circle cx="65" cy="30" r="22" fill="none" stroke="var(--accent)" stroke-width="5" opacity="0.8"/>
-  </svg>
-</div>
+        <p style="margin-top: 14px; font-style: italic; font-weight: bold; color: var(--accent);">
+          ¡Porque el 10 de septiembre de 2027 nos espera el mejor viaje de todos! ❤️
+        </p>
+        
+        <!-- Anillos entrelazados -->
+        <div style="text-align: center; margin-top: 25px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="80" height="50" viewBox="0 0 100 60">
+            <circle cx="35" cy="30" r="22" fill="none" stroke="var(--accent)" stroke-width="4.5" opacity="0.8"/>
+            <circle cx="65" cy="30" r="22" fill="none" stroke="var(--accent)" stroke-width="4.5" opacity="0.8"/>
+          </svg>
+        </div>
       </div>
     </div>
 
@@ -244,9 +293,33 @@
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
     AOS.init({ once: true, offset: 120 });
-    function mostrarSorpresa() {
-      document.getElementById('mensajeSecreto').style.display = 'block';
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    
+    // Lógica del juego del candado
+    function comprobarFecha() {
+      const dia = parseInt(document.getElementById('input-dia').value);
+      const mes = parseInt(document.getElementById('input-mes').value);
+      const ano = parseInt(document.getElementById('input-ano').value);
+      const errorMsg = document.getElementById('error-msg');
+      const btn = document.getElementById('btn-unlock');
+
+      // Comprueba si la fecha es 10 de septiembre de 2027
+      if (dia === 10 && mes === 9 && ano === 2027) {
+        // Oculta el candado y muestra la sorpresa
+        document.getElementById('game-container').style.display = 'none';
+        document.getElementById('mensajeSecreto').style.display = 'block';
+        
+        // Lluvia de confeti
+        confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+      } else {
+        // Muestra error y hace temblar el botón
+        errorMsg.style.display = 'block';
+        btn.classList.add('shake');
+        
+        // Quita la clase shake tras medio segundo para que pueda volver a temblar si falla de nuevo
+        setTimeout(() => {
+          btn.classList.remove('shake');
+        }, 500);
+      }
     }
   </script>
 </body>
